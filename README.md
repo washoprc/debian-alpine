@@ -1,97 +1,83 @@
-# 開発環境 Docker設定
+# Dev Environment Docker Setup
 
-このリポジトリには、Git、Vim、Zshが設定された開発環境のDockerコンテナ設定が含まれています。  
-気軽にこれらのツールを利用してテストする目的で作成しました。  
-DebianベースとAlpineベースの2つの環境から選択できます。  
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)](https://www.alpinelinux.org/)
+[![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/)
 
-## 特徴
+開発環境用のDockerコンテナ設定です。Git、Vim、Zshが事前設定された環境を提供します。
 
-- Git、Vim、Zshが事前インストール済み
-- 日本語対応済み
-- カラー表示対応
-- デフォルトシェルがZshに設定済み
-- Git情報をプロンプトに表示
+[English](./README_EN.md) | 日本語
 
-## 環境選択
-
-### Debian版
-
-- 標準的なLinux環境
-- 安定性重視
-- より多くのパッケージが利用可能
+## 🚀 クイックスタート
 
 ```bash
-# Debian版の起動
-docker-compose build
+# Debian版
+git clone https://github.com/yourusername/dev-env-docker.git
+cd dev-env-docker
 docker-compose up -d
 docker-compose exec debian zsh
-```
 
-### Alpine版
-
-- 軽量な環境（イメージサイズが小さい）
-- メモリ使用量が少ない
-- セキュリティ重視
-
-```bash
-# Alpine版の起動
-docker-compose -f docker-compose.alpine.yaml build
+# Alpine版（軽量版）
 docker-compose -f docker-compose.alpine.yaml up -d
 docker-compose -f docker-compose.alpine.yaml exec alpine zsh
 ```
 
-## 設定ファイルの説明
+## ✨ 特徴
 
-### Docker関連
+- 📦 Git、Vim、Zshが事前インストール済み
+- 🇯🇵 日本語環境完全対応
+- 🎨 ターミナルのカラー表示対応
+- 🔧 Zshをデフォルトシェルとして設定
+- 🔍 Gitステータスのプロンプト表示
 
-- `docker-compose.yaml`: Debian版のコンテナ設定
-- `docker-compose.alpine.yaml`: Alpine版のコンテナ設定
-- `Dockerfile`: Debian版のDockerfile
-- `Dockerfile.alpine`: Alpine版のDockerfile
+## 🌟 提供される環境
 
-### シェル設定
+### 🐋 Debian版
 
-- `.zshrc`: Zshの設定ファイル
-  - カラー表示対応
-  - Gitブランチ情報の表示
-  - コマンド履歴の設定
-  - 補完機能の強化
+- 安定性を重視した標準的なLinux環境
+- 豊富なパッケージが利用可能
+- 本番環境との互換性が高い
 
-### エディタ設定
+### 🏔 Alpine版
 
-- `.vimrc`: Vimの設定ファイル
-  - 日本語対応
-  - UTF-8設定
-  - カラースキーム設定
-  - 行番号表示
-  - シンタックスハイライト
-  - インデント設定
+- 超軽量（イメージサイズ約100MB）
+- 最小限のメモリ使用量
+- セキュリティ重視の設計
 
-## カスタマイズ
+## 📁 ディレクトリ構成
 
-### Zshの設定変更
+```
+.
+├── docker-compose.yaml          # Debian環境の設定
+├── docker-compose.alpine.yaml   # Alpine環境の設定
+├── Dockerfile                   # Debian用Dockerfile
+├── Dockerfile.alpine           # Alpine用Dockerfile
+├── .zshrc                      # Zsh設定
+├── .vimrc                      # Vim設定
+└── README.md                   # 日本語ドキュメント
+```
 
-`.zshrc`を編集することで、プロンプトの表示やエイリアスなどをカスタマイズできます。
+## ⚙️ カスタマイズ
 
-主な設定項目：
+### Zsh設定のカスタマイズ
+
+`config/.zshrc`を編集することで以下をカスタマイズ可能：
 
 - プロンプトの表示形式
 - エイリアス設定
-- 補完の動作
+- 補完の挙動
 
-### Vimの設定変更
+### Vim設定のカスタマイズ
 
-`.vimrc`を編集することで、エディタの動作をカスタマイズできます。
-
-主な設定項目：
+`config/.vimrc`で以下の設定が可能：
 
 - カラースキーム
-- インデント幅
+- インデント設定
 - キーマッピング
 - 表示オプション
 
-## 注意事項
+## 📝 注意事項
 
-- コンテナ内のファイルは`/workspace`にマウントされます
-- ホストのファイルシステムとの同期は自動的に行われます
-- 設定ファイルの変更後は、コンテナの再ビルドが必要です
+- コンテナの作業ディレクトリは`/workspace`
+- ホストのファイルシステムと自動同期
+- 設定変更後はコンテナの再ビルドが必要
