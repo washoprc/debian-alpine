@@ -1,0 +1,33 @@
+FROM alpine:latest
+
+# システムのアップデートとパッケージのインストール
+RUN apk update && apk add --no-cache \
+    git \
+    zsh \
+    vim \
+    shadow \
+    zsh-vcs \
+    # 日本語フォントとロケールのサポート
+    font-noto-cjk \
+    musl-locales \
+    tzdata
+
+# タイムゾーンの設定
+ENV TZ=Asia/Tokyo
+
+# デフォルトシェルをzshに変更
+RUN chsh -s /bin/zsh root
+
+# .zshrcと.vimrcのコピー
+COPY .zshrc /root/.zshrc
+COPY .vimrc /root/.vimrc
+
+# zsh-vcsの設定ファイルへのパスを追加
+RUN echo "source /usr/share/zsh/plugins/vcs/vcs.zsh" >> /root/.zshrc
+
+# ワーキングディレクトリの設定
+WORKDIR /workspace
+
+# デフォルトシェルの設定
+SHELL ["/bin/zsh", "-c"]
+CMD ["/bin/zsh"]

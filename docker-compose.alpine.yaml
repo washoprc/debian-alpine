@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  alpine:
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+    tty: true
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
