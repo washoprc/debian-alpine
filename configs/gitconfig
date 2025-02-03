@@ -20,4 +20,4 @@ rebase = false
 [push]
 default = simple
 [commit]
-template = ~/.gitmessage
+template = ~/.config/git/message

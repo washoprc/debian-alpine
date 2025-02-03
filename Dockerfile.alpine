@@ -18,9 +18,18 @@ ENV TZ=Asia/Tokyo
 # デフォルトシェルをzshに変更
 RUN chsh -s /bin/zsh root
 
+# ~/.config/gitディレクトリを作成
+RUN mkdir -p /root/.config/git
+
+# Git関連の設定ファイルをコピー
+COPY ./configs/gitconfig /root/.config/git/config
+COPY ./configs/gitmessage /root/.config/git/message
+COPY ./configs/gitignore /root/.config/git/ignore
+COPY ./configs/attributes /root/.config/git/attributes
+
 # .zshrcと.vimrcのコピー
-COPY .zshrc /root/.zshrc
-COPY .vimrc /root/.vimrc
+COPY ./configs/.zshrc /root/.zshrc
+COPY ./configs/.vimrc /root/.vimrc
 
 # zsh-vcsの設定ファイルへのパスを追加
 RUN echo "source /usr/share/zsh/plugins/vcs/vcs.zsh" >> /root/.zshrc
