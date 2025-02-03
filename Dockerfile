@@ -13,6 +13,8 @@ RUN chsh -s /bin/zsh root
 # .zshrcと.vimrcのコピー
 COPY .zshrc /root/.zshrc
 COPY .vimrc /root/.vimrc
+COPY .gitconfig /root/.gitconfig
+COPY .gitmessage /root/.gitmessage
 
 # ワーキングディレクトリの設定
 WORKDIR /workspace

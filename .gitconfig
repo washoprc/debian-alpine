@@ -1,0 +1,23 @@
+[user]
+name = foo
+email = foo@example.com
+[core]
+editor = vim -c \"set fenc=utf-8\"
+autocrlf = input
+[color]
+diff = auto
+status = auto
+[alias]
+st = status
+sw = switch
+ci = commit
+co = checkout
+br = branch
+[init]
+defaultBranch = main
+[pull]
+rebase = false
+[push]
+default = simple
+[commit]
+template = ~/.gitmessage
