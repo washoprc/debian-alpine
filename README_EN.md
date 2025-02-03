@@ -1,4 +1,4 @@
-# Dev Environment Docker Setup
+# Debian & Alpine Docker Setup
 
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)](https://www.alpinelinux.org/)
@@ -12,8 +12,8 @@ English | [日本語](./README.md)
 
 ```bash
 # Debian version
-git clone https://github.com/yourusername/dev-env-docker.git
-cd dev-env-docker
+git clone https://github.com/washoprc/debian-alpine.git
+cd debian-alpine
 docker-compose up -d
 docker-compose exec debian zsh
 
@@ -46,22 +46,48 @@ docker-compose -f docker-compose.alpine.yaml exec alpine zsh
 
 ## 📁 Directory Structure
 
-```
+```tree
 .
 ├── docker-compose.yaml          # Debian environment config
 ├── docker-compose.alpine.yaml   # Alpine environment config
 ├── Dockerfile                   # Dockerfile for Debian
-├── Dockerfile.alpine           # Dockerfile for Alpine
-├── .zshrc                      # Zsh configuration
-├── .vimrc                      # Vim configuration
-└── README.md                   # Japanese documentation
+├── Dockerfile.alpine            # Dockerfile for Alpine
+├── configs/                     # Configuration files directory
+│   ├── .vimrc                  # Vim configuration
+│   ├── .zshrc                  # Zsh configuration
+│   ├── attributes              # Git attributes configuration
+│   ├── gitconfig               # Git configuration
+│   ├── gitignore              # Git ignore patterns
+│   └── gitmessage             # Git commit message template
+├── README.md                    # Japanese documentation
+└── README_EN.md                # English documentation
 ```
+
+## Configuration File Structure
+
+Configuration files in the Docker image are placed as follows:
+
+### Git Configuration (`/root/.config/git/`)
+
+Since Git 2.0, using `~/.config/git` as the configuration directory is recommended. This includes:
+
+- `configs/gitconfig` → `/root/.config/git/config`: Basic settings including aliases and user info
+- `configs/gitmessage` → `/root/.config/git/message`: Template for maintaining consistent commit messages
+- `configs/gitignore` → `/root/.config/git/ignore`: Project-wide ignore patterns
+- `configs/attributes` → `/root/.config/git/attributes`: Automatic file attribute settings (line endings etc.)
+
+### Shell & Editor Configuration (Home Directory)
+
+Following traditional dotfile conventions, placed directly in home directory:
+
+- `configs/.zshrc` → `/root/.zshrc`: Zsh startup configuration, aliases, environment variables
+- `configs/.vimrc` → `/root/.vimrc`: Vim keymaps, plugins, and display settings
 
 ## ⚙️ Customization
 
 ### Zsh Configuration
 
-Edit `.zshrc` to customize:
+Edit `configs/.zshrc` to customize:
 
 - Prompt display format
 - Alias settings
@@ -69,7 +95,7 @@ Edit `.zshrc` to customize:
 
 ### Vim Configuration
 
-Modify `.vimrc` to set:
+Modify `configs/.vimrc` to set:
 
 - Color scheme
 - Indentation settings

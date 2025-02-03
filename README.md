@@ -1,4 +1,4 @@
-# Dev Environment Docker Setup
+# Debian & Alpine Docker Setup
 
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)](https://www.alpinelinux.org/)
@@ -12,8 +12,8 @@
 
 ```bash
 # Debian版
-git clone https://github.com/yourusername/dev-env-docker.git
-cd dev-env-docker
+git clone https://github.com/washoprc/debian-alpine.git
+cd debian-alpine
 docker-compose up -d
 docker-compose exec debian zsh
 
@@ -46,22 +46,48 @@ docker-compose -f docker-compose.alpine.yaml exec alpine zsh
 
 ## 📁 ディレクトリ構成
 
-```
+```tree
 .
 ├── docker-compose.yaml          # Debian環境の設定
 ├── docker-compose.alpine.yaml   # Alpine環境の設定
 ├── Dockerfile                   # Debian用Dockerfile
-├── Dockerfile.alpine           # Alpine用Dockerfile
-├── .zshrc                      # Zsh設定
-├── .vimrc                      # Vim設定
-└── README.md                   # 日本語ドキュメント
+├── Dockerfile.alpine            # Alpine用Dockerfile
+├── configs/                     # 設定ファイル用ディレクトリ
+│   ├── .vimrc                  # Vim設定
+│   ├── .zshrc                  # Zsh設定
+│   ├── attributes              # Git属性設定
+│   ├── gitconfig              # Git設定
+│   ├── gitignore             # Gitの除外設定
+│   └── gitmessage            # Gitコミットメッセージテンプレート
+├── README.md                    # 日本語ドキュメント
+└── README_EN.md                # 英語ドキュメント
 ```
+
+## 設定ファイル構成
+
+Dockerイメージ内での設定ファイルは以下のように配置されます：
+
+### Git設定 (`/root/.config/git/`)
+
+Git 2.0以降では、`~/.config/git`を設定ディレクトリとして使用することが推奨されています。これにより：
+
+- `configs/gitconfig` → `/root/.config/git/config`：エイリアスやユーザー情報などの基本設定
+- `configs/gitmessage` → `/root/.config/git/message`：一貫性のあるコミットメッセージ形式を維持
+- `configs/gitignore` → `/root/.config/git/ignore`：プロジェクト共通の除外ファイル定義
+- `configs/attributes` → `/root/.config/git/attributes`：ファイル属性の自動設定（改行コードなど）
+
+### シェル・エディタ設定 (ホームディレクトリ)
+
+従来のdotfile配置規則に従い、直接ホームディレクトリに配置：
+
+- `configs/.zshrc` → `/root/.zshrc`：Zshの起動時設定、エイリアス、環境変数など
+- `configs/.vimrc` → `/root/.vimrc`：Vimのキーマップ、プラグイン、表示設定など
 
 ## ⚙️ カスタマイズ
 
 ### Zsh設定のカスタマイズ
 
-`config/.zshrc`を編集することで以下をカスタマイズ可能：
+`configs/.zshrc`を編集することで以下をカスタマイズ可能：
 
 - プロンプトの表示形式
 - エイリアス設定
@@ -69,7 +95,7 @@ docker-compose -f docker-compose.alpine.yaml exec alpine zsh
 
 ### Vim設定のカスタマイズ
 
-`config/.vimrc`で以下の設定が可能：
+`configs/.vimrc`で以下の設定が可能：
 
 - カラースキーム
 - インデント設定
